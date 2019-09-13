@@ -44,7 +44,7 @@ function transform(record) {
     id: record.PK_LatinskNavnID,
     parentId: record.FK_OverordnaLatinskNavnID,
     taxonId: record.PK_TaksonID,
-    tittel: { la: settSammenNavn(record) },
+    tittel: { la: capitalizeFirstLetter(settSammenNavn(record)) },
     status: record.Hovedstatus,
     gyldigId: record.FK_GyldigLatinskNavnID,
     finnesINorge: record.FinnesINorge === "Ja"
