@@ -1,6 +1,6 @@
 {
-  "name": "art-lastejobb",
-  "version": "1.0.0",
+  "name": "art-kode-lastejobb",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "lastejobb": "^2.0.2"
   }
