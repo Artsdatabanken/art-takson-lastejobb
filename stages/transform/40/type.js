@@ -1,4 +1,4 @@
-const { io } = require("lastejobb");
+const { io, json } = require("lastejobb");
 
 const prefix = "AR";
 
