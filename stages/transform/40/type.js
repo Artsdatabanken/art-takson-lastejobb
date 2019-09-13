@@ -35,8 +35,8 @@ function forelder(parentId) {
   return parent;
 }
 
-function forelderkode(id) {
-  if (!id) prefix;
+function tilKode(id) {
+  if (!id) return prefix;
   return prefix + "-" + id;
 }
 
@@ -44,12 +44,12 @@ let koder = {};
 taxons.forEach(c => {
   if (c.status !== "Gyldig") return;
   if (!c.finnesINorge) return;
-  const kode = prefix + c.id;
+  const kode = tilKode(c.id);
   const parent = forelder(c.parentId);
   if (!parent) return; // Kan være status Uavklart f.eks.
   const e = {
     tittel: c.tittel,
-    foreldre: [forelderkode(parent.id)]
+    foreldre: [tilKode(parent.id)]
   };
   koder[kode] = e;
 });
