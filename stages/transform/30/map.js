@@ -1,32 +1,6 @@
 const { io } = require("lastejobb");
 
-const hierarki = [
-  "Rike",
-  "Underrike",
-  "Rekke",
-  "Underrekke",
-  "Overklasse",
-  "Klasse",
-  "Underklasse",
-  "Infraklasse",
-  "Kohort",
-  "Overorden",
-  "Orden",
-  "Underorden",
-  "Infraorden",
-  "Overfamilie",
-  "Familie",
-  "Underfamilie",
-  "Tribus",
-  "Undertribus",
-  "Slekt",
-  "Underslekt",
-  "Seksjon",
-  "Art",
-  "Underart",
-  "Varietet",
-  "Form"
-].reverse();
+const hierarki = io.readJson("kildedata/hierarki.json").reverse();
 
 const taxon = io.lesDatafil("taxon_to_json");
 
