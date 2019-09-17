@@ -1,6 +1,8 @@
 const { io } = require("lastejobb");
 
-const hierarki = io.readJson("kildedata/hierarki.json").reverse();
+const hierarki = io
+  .readJson("data/art-kode-ubehandlet/hierarki.json")
+  .reverse();
 
 const taxon = io.lesDatafil("taxon_to_json");
 
