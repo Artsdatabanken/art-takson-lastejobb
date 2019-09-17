@@ -1,13 +1,12 @@
-const { io, json } = require("lastejobb");
+const { io } = require("lastejobb");
 
 const prefix = "AR";
 
 const taxons = io.lesDatafil("map").items;
+const toplevel = io.lesDatafil("art-kode-ubehandlet/type");
 
 let taxon2Data = {};
-taxons.forEach(tx => {
-  taxon2Data[tx.id] = tx;
-});
+taxons.forEach(tx => (taxon2Data[tx.id] = tx));
 
 Object.keys(taxon2Data).forEach(kode => {
   let node = taxon2Data[kode];
@@ -25,7 +24,6 @@ taxons.forEach(taxon => {
 });
 
 function forelder(parentId) {
-  if (parentId && parentId.indexOf("108610") >= 0) debugger;
   if (!parentId) return {};
   let parent = taxon2Data[parentId];
   if (!parent) return null; // finnes ikke i Norge?
@@ -53,5 +51,7 @@ taxons.forEach(c => {
   };
   koder[kode] = e;
 });
+
+toplevel.forEach(tx => (koder[tx.kode] = tx));
 
 io.skrivBuildfil(__filename, koder);
