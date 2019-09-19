@@ -20,14 +20,11 @@ function transform(record) {
     id: record.PK_LatinskNavnID,
     parentId: record.FK_OverordnaLatinskNavnID,
     taxonId: record.PK_TaksonID,
-    tittel: { la: capitalizeFirstLetter(settSammenNavn(record)) },
+    tittel: { sn: capitalizeFirstLetter(settSammenNavn(record)) },
     status: record.Hovedstatus,
     gyldigId: record.FK_GyldigLatinskNavnID,
     finnesINorge: record.FinnesINorge === "Ja"
   };
-  //  if (o.tittel.la === "Incertae sedis") return
-  //  if (o.tittel.la === "Incerta sedis") return
-  //  if (o.tittel.la === "(Rekke) Incertae sedis") return
 
   pop(o.tittel, "nb", record, "Bokmål");
   pop(o.tittel, "nn", record, "Nynorsk");
