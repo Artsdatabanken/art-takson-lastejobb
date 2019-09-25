@@ -1,5 +1,7 @@
 const { io } = require("lastejobb");
 
+const alleår = {};
+
 const hierarki = io
   .readJson("data/art-takson-ubehandlet/hierarki.json")
   .reverse();
@@ -8,6 +10,7 @@ const taxon = io.lesDatafil("taxon_to_json");
 
 const r = [];
 taxon.items.forEach(e => transform(e));
+io.skrivDatafil("alleår", alleår);
 io.skrivDatafil(__filename, r);
 
 function transform(record) {
@@ -24,6 +27,7 @@ function transform(record) {
     nivå: nivå(record),
     status: record.Hovedstatus,
     gyldigId: record.FK_GyldigLatinskNavnID,
+    autor: decodeAutorStreng(record.Autorstreng, settSammenNavn(record)),
     finnesINorge: record.FinnesINorge === "Ja"
   };
 
@@ -31,6 +35,17 @@ function transform(record) {
   pop(o.tittel, "nn", record, "Nynorsk");
   pop(o.tittel, "sa", record, "Samisk");
   r.push(o);
+}
+
+function decodeAutorStreng(autorstreng, sp) {
+  if (autorstreng.length <= 0) return {};
+  const r = autorstreng.match(/(.*?)[\s\,\(]+([\d][\d][\d][\d])/);
+  //  if (!r) console.log(autorstreng, sp);
+  if (!r) return { navn: autorstreng };
+  alleår[r[2]] = (alleår[r[2]] || 0) + 1;
+  const år = parseInt(r[2]);
+  if (år < 1000 || år > 2020) return { navn: autorstreng };
+  return { navn: r[1], år };
 }
 
 function capitalizeFirstLetter(string) {

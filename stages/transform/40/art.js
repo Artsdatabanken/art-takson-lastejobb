@@ -47,6 +47,7 @@ taxons.forEach(c => {
   const e = {
     tittel: c.tittel,
     nivå: c.nivå,
+    autor: c.autor,
     foreldre: [tilKode(parent.id)]
   };
   koder[kode] = e;
