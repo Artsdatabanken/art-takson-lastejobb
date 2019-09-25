@@ -1,7 +1,7 @@
 const { io } = require("lastejobb");
 
 const hierarki = io
-  .readJson("data/art-kode-ubehandlet/hierarki.json")
+  .readJson("data/art-takson-ubehandlet/hierarki.json")
   .reverse();
 
 const taxon = io.lesDatafil("taxon_to_json");
@@ -21,6 +21,7 @@ function transform(record) {
     parentId: record.FK_OverordnaLatinskNavnID,
     taxonId: record.PK_TaksonID,
     tittel: { sn: capitalizeFirstLetter(settSammenNavn(record)) },
+    nivå: nivå(record),
     status: record.Hovedstatus,
     gyldigId: record.FK_GyldigLatinskNavnID,
     finnesINorge: record.FinnesINorge === "Ja"
@@ -40,6 +41,14 @@ function pop(o, key, r, suffix) {
   const value = r["Populærnavn" + suffix];
   if (!value) return;
   o[key] = capitalizeFirstLetter(value);
+}
+
+function nivå(r) {
+  for (i = 0; i < hierarki.length; i++) {
+    const nivå = hierarki[i];
+    if (r[nivå]) return nivå;
+  }
+  throw new Error("Mangler nivå på art med sciId #" + r.PK_LatinskNavnID);
 }
 
 function settSammenNavn(r) {

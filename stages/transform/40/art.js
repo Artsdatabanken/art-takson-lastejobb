@@ -46,6 +46,7 @@ taxons.forEach(c => {
   if (!parent) return; // Kan være status Uavklart f.eks.
   const e = {
     tittel: c.tittel,
+    nivå: c.nivå,
     foreldre: [tilKode(parent.id)]
   };
   koder[kode] = e;
