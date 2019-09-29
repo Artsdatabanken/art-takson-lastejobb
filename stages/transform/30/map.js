@@ -75,6 +75,7 @@ function settSammenNavn(r) {
     var erKomplett = false;
     const rank = hierarki[i];
     const nivå = rank.tittel;
+    if (navn && nivå === "Underslekt") continue; // Underslekt blir ikke med i artsnavnet (bare slekt)?
     if (!r[nivå]) continue;
     const pre = rank.prefiks ? rank.prefiks + " " : "";
     navn = pre + r[nivå] + " " + navn;
