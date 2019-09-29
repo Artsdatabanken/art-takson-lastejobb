@@ -33,7 +33,7 @@ function transform(record) {
     finnesINorge: record.FinnesINorge === "Ja"
   };
 
-  o.tittel.sn1 = capitalizeFirstLetter(record[o.nivå]);
+  o.tittel.url = capitalizeFirstLetter(record[o.nivå]);
 
   pop(o.tittel, "nb", record, "Bokmål");
   pop(o.tittel, "nn", record, "Nynorsk");

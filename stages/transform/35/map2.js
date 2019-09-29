@@ -2,7 +2,7 @@ const { io } = require("lastejobb");
 
 const prefix = "AR";
 
-const taxons = io.lesDatafil("map").items;
+const taxons = io.lesDatafil("url").items;
 
 let taxon2Data = {};
 taxons.forEach(tx => (taxon2Data[tx.id] = tx));
@@ -53,4 +53,4 @@ taxons.forEach(c => {
   koder[kode] = e;
 });
 
-io.skrivBuildfil(__filename, koder);
+io.skrivDatafil(__filename, koder);
