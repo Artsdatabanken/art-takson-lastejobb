@@ -29,7 +29,7 @@ function transform(record) {
     nivå: nivå(record),
     status: record.Hovedstatus,
     gyldigId: record.FK_GyldigLatinskNavnID,
-    autor: decodeAutorStreng(record.Autorstreng),
+    autoritet: decodeAutorStreng(record.Autorstreng),
     finnesINorge: record.FinnesINorge === "Ja"
   };
 
