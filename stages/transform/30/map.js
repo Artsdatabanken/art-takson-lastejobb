@@ -1,14 +1,10 @@
 const { io } = require("lastejobb");
 
 const alleår = {};
-const prefix = {
-  Varietet: "var. ",
-  Underart: "subsp. "
-};
 
 const hierarki = io
   .readJson("data/art-takson-ubehandlet/hierarki.json")
-  .reverse();
+  .items.reverse();
 
 const taxon = io.lesDatafil("taxon_to_json");
 
@@ -67,7 +63,7 @@ function pop(o, key, r, suffix) {
 
 function nivå(r) {
   for (i = 0; i < hierarki.length; i++) {
-    const nivå = hierarki[i];
+    const nivå = hierarki[i].tittel;
     if (r[nivå]) return nivå;
   }
   throw new Error("Mangler nivå på art med sciId #" + r.PK_LatinskNavnID);
@@ -76,9 +72,10 @@ function nivå(r) {
 function settSammenNavn(r) {
   let navn = "";
   for (i = 0; i < hierarki.length; i++) {
-    const nivå = hierarki[i];
+    const rank = hierarki[i];
+    const nivå = rank.tittel;
     if (!r[nivå]) continue;
-    const pre = prefix[nivå] || "";
+    const pre = rank.prefiks ? rank.prefiks + " " : "";
     navn = pre + r[nivå] + " " + navn;
     //   if (navn.indexOf("caninus") >= 0) debugger;
     if (navn && i > 5) return navn.trim();
