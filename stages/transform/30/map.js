@@ -72,13 +72,14 @@ function nivå(r) {
 function settSammenNavn(r) {
   let navn = "";
   for (i = 0; i < hierarki.length; i++) {
+    var erKomplett = false;
     const rank = hierarki[i];
     const nivå = rank.tittel;
     if (!r[nivå]) continue;
     const pre = rank.prefiks ? rank.prefiks + " " : "";
     navn = pre + r[nivå] + " " + navn;
-    //   if (navn.indexOf("caninus") >= 0) debugger;
-    if (navn && i > 5) return navn.trim();
+    if (i >= 4 && navn) erKomplett = true;
+    if (erKomplett) return navn.trim();
   }
   throw new Error("Mangler navn på art med sciId #" + r.PK_LatinskNavnID);
 }
