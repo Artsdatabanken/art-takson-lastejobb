@@ -43,10 +43,11 @@ function transform(record) {
 
 function decodeAutorStreng(autorstreng) {
   if (autorstreng.length <= 0) return {};
-  const r = autorstreng.match(/(.*?)[\s\,\(]+([\d][\d][\d][\d])/);
+  const r = autorstreng.match(/\(?(.*?)[\s\,\(]+([\d][\d][\d][\d])/);
   if (!r) return { navn: autorstreng };
   alleår[r[2]] = (alleår[r[2]] || 0) + 1;
   const år = parseInt(r[2]);
+  if (r[1].indexOf("(") >= 0) debugger;
   if (år < 1000 || år > 2020) return { navn: autorstreng };
   return { navn: r[1], år };
 }
