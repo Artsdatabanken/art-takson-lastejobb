@@ -9,17 +9,22 @@ const hierarki = io
 const taxon = io.lesDatafil("taxon_to_json");
 
 let sciNameId2ValidSciNameId = [];
+let taxonId2SciNameId = [];
 const r = [];
 taxon.items.forEach(e => transform(e));
 io.skrivDatafil("alleår", alleår);
 io.skrivBuildfil("sciNameId2ValidSciNameId", sciNameId2ValidSciNameId);
+io.skrivBuildfil("taxonId2SciNameId", taxonId2SciNameId);
 io.skrivDatafil(__filename, r);
 
 function transform(record) {
   const srcKey = record.FK_OverordnaLatinskNavnID;
   const dstKey = record.FK_GyldigLatinskNavnID;
   sciNameId2ValidSciNameId.push({ id: srcKey, valid: dstKey });
-
+  taxonId2SciNameId.push({
+    taxonId: record.PK_TaksonID,
+    sciNameId: record.FK_GyldigLatinskNavnID
+  });
   // TODO: Fjern varietet og form inntil videre
   // if (r["Underart"]) return
   // if (record["Varietet"]) return;
