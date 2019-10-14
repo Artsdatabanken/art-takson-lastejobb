@@ -18,17 +18,13 @@ io.skrivBuildfil("taxonId2SciNameId", taxonId2SciNameId);
 io.skrivDatafil(__filename, r);
 
 function transform(record) {
-  const srcKey = record.FK_OverordnaLatinskNavnID;
+  const srcKey = record.PK_LatinskNavnID;
   const dstKey = record.FK_GyldigLatinskNavnID;
   sciNameId2ValidSciNameId.push({ id: srcKey, valid: dstKey });
   taxonId2SciNameId.push({
     taxonId: record.PK_TaksonID,
     sciNameId: record.FK_GyldigLatinskNavnID
   });
-  // TODO: Fjern varietet og form inntil videre
-  // if (r["Underart"]) return
-  // if (record["Varietet"]) return;
-  // if (record["Form"]) return;
   const o = {
     id: record.PK_LatinskNavnID,
     parentId: record.FK_OverordnaLatinskNavnID,
