@@ -38,6 +38,7 @@ function tilKode(id) {
 }
 
 let koder = {};
+
 taxons.forEach(c => {
   if (c.status !== "Gyldig") return;
   if (!c.finnesINorge) return;

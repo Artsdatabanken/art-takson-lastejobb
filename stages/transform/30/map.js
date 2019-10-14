@@ -8,17 +8,22 @@ const hierarki = io
 
 const taxon = io.lesDatafil("taxon_to_json");
 
+let sciNameId2ValidSciNameId = [];
 const r = [];
 taxon.items.forEach(e => transform(e));
 io.skrivDatafil("alleår", alleår);
+io.skrivBuildfil("sciNameId2ValidSciNameId", sciNameId2ValidSciNameId);
 io.skrivDatafil(__filename, r);
 
 function transform(record) {
+  const srcKey = record.FK_OverordnaLatinskNavnID;
+  const dstKey = record.FK_GyldigLatinskNavnID;
+  sciNameId2ValidSciNameId.push({ id: srcKey, valid: dstKey });
+
   // TODO: Fjern varietet og form inntil videre
   // if (r["Underart"]) return
   // if (record["Varietet"]) return;
   // if (record["Form"]) return;
-
   const o = {
     id: record.PK_LatinskNavnID,
     parentId: record.FK_OverordnaLatinskNavnID,
@@ -47,7 +52,6 @@ function decodeAutorStreng(autorstreng) {
   if (!r) return { navn: autorstreng };
   alleår[r[2]] = (alleår[r[2]] || 0) + 1;
   const år = parseInt(r[2]);
-  if (r[1].indexOf("(") >= 0) debugger;
   if (år < 1000 || år > 2020) return { navn: autorstreng };
   return { navn: r[1], år };
 }
