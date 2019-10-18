@@ -4,9 +4,10 @@ const taxons = io.lesDatafil("map2");
 
 const r = {};
 const redirect = [];
-
+const stats = {};
 Object.keys(taxons).forEach(kode => {
   let taxon = taxons[kode];
+  stats[taxon.status || "gyldig"] = (stats[taxon.status || "gyldig"] || 0) + 1;
   if (!taxon.status) {
     r[kode] = taxon; // Gyldig
     return;
@@ -35,3 +36,8 @@ function fyllPåSynonymer(tittel, gyldig) {
 
 io.skrivDatafil(__filename, r);
 io.skrivBuildfil("redirect", redirect);
+
+log.info("Statistikk:");
+Object.keys(stats).forEach(status =>
+  log.info("   " + status + ": " + stats[status])
+);
