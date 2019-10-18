@@ -7,7 +7,11 @@ const redirect = [];
 
 Object.keys(taxons).forEach(kode => {
   let taxon = taxons[kode];
-  if (!taxon.status) return (r[kode] = taxon); // Gyldig
+  if (!taxon.status) {
+    r[kode] = taxon; // Gyldig
+    return;
+  }
+
   const gyldig = taxons[taxon.kodeGyldig];
   if (!gyldig)
     return log.warn(
