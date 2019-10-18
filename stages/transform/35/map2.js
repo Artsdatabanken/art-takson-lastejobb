@@ -26,9 +26,11 @@ function forelder(parentId) {
   if (!parentId) return {};
   let parent = taxon2Data[parentId];
   if (!parent) return null; // finnes ikke i Norge?
-  while (parent.gyldigId !== parent.id) parent = taxon2Data[parent.gyldigId];
-  if (!parent) return null;
-  if (!parent.status === "Gyldig") return null;
+  while (parent.gyldigId !== parent.id) {
+    parent = taxon2Data[parent.gyldigId];
+    if (!parent) return null;
+  }
+  //  if (!parent.status === "Gyldig") return null;
   return parent;
 }
 
@@ -40,7 +42,9 @@ function tilKode(id) {
 let koder = {};
 
 taxons.forEach(c => {
-  if (c.status !== "Gyldig") return;
+  /*  if ("Gyldig_Synonym".indexOf(c.status) < 0) {
+    return;
+  }*/
   if (!c.finnesINorge) return;
   const kode = tilKode(c.id);
   const parent = forelder(c.parentId);
@@ -51,6 +55,9 @@ taxons.forEach(c => {
     autoritet: c.autoritet,
     foreldre: [tilKode(parent.id)]
   };
+  if (c.status !== "Gyldig") e.status = c.status.toLowerCase();
+  //if (c.gyldigId !== c.id)
+  if (koder[kode]) debugger;
   koder[kode] = e;
 });
 
