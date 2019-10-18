@@ -30,7 +30,6 @@ function forelder(parentId) {
     parent = taxon2Data[parent.gyldigId];
     if (!parent) return null;
   }
-  //  if (!parent.status === "Gyldig") return null;
   return parent;
 }
 
@@ -55,7 +54,11 @@ taxons.forEach(c => {
     autoritet: c.autoritet,
     foreldre: [tilKode(parent.id)]
   };
-  if (c.status !== "Gyldig") e.status = c.status.toLowerCase();
+  if (c.status !== "Gyldig") {
+    e.status = c.status.toLowerCase();
+    e.kodeGyldig = tilKode(c.gyldigId);
+  }
+
   //if (c.gyldigId !== c.id)
   if (koder[kode]) debugger;
   koder[kode] = e;
