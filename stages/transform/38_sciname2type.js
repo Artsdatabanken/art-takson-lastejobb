@@ -1,4 +1,4 @@
-const { io, json } = require("lastejobb");
+const { io } = require("lastejobb");
 
 const taxon = io.lesDatafil("37_synonym");
 
