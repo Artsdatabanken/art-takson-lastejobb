@@ -2,23 +2,22 @@ const { io, json } = require("lastejobb");
 
 const taxon = io.lesDatafil("37_synonym");
 
-const sciName2ValidSciNameId = {};
-Object.keys(taxon).forEach(kode => tittel(kode, taxon[kode].tittel.sn));
+const sciName2ValidSciNameId = []; //{ preferred: {}, synonym: {} };
+Object.keys(taxon).forEach(kode =>
+  tittel(kode, taxon[kode].tittel.sn, "preferred")
+);
 Object.keys(taxon).forEach(kode => synonym(kode));
 
-const r = json.objectToArray(sciName2ValidSciNameId, "sn");
-io.skrivBuildfil("sciName2ValidSciNameId", r);
+io.skrivBuildfil("sciName2ValidSciNameId", sciName2ValidSciNameId);
 
-function tittel(kode, tittel) {
+function tittel(kode, tittel, nametype) {
   tittel = tittel.toLowerCase();
-  if (!sciName2ValidSciNameId[tittel])
-    sciName2ValidSciNameId[tittel] = { koder: [] };
-  sciName2ValidSciNameId[tittel].koder.push(kode);
+  sciName2ValidSciNameId.push({ tittel, kode, nametype });
 }
 
 function synonym(kode) {
   const o = taxon[kode];
   if (!o.synonym) return;
   if (!o.synonym.sn) return;
-  o.synonym.sn.forEach(syn => tittel(kode, syn));
+  o.synonym.sn.forEach(syn => tittel(kode, syn, "synonym"));
 }
