@@ -6,20 +6,16 @@ const hierarki = io
   .readJson("data/art-takson-ubehandlet/hierarki.json")
   .items.reverse();
 
-const taxon = io.lesDatafil("taxon_to_json");
+const taxon = io.lesDatafil("20_taxon_to_json");
 
-let sciName2ValidSciNameId = [];
 let taxonId2SciNameId = [];
 const r = [];
 taxon.items.forEach(e => transform(e));
 io.skrivDatafil("alleår", alleår);
-io.skrivBuildfil("sciName2ValidSciNameId", sciName2ValidSciNameId);
 io.skrivBuildfil("taxonId2SciNameId", taxonId2SciNameId);
 io.skrivDatafil(__filename, r);
 
 function transform(record) {
-  const srcKey = record.PK_LatinskNavnID;
-  const dstKey = record.FK_GyldigLatinskNavnID;
   taxonId2SciNameId.push({
     taxonId: record.PK_TaksonID,
     sciNameId: record.FK_GyldigLatinskNavnID
@@ -37,11 +33,6 @@ function transform(record) {
     autoritet: decodeAutorStreng(record.Autorstreng),
     finnesINorge: record.FinnesINorge === "Ja"
   };
-  sciName2ValidSciNameId.push({
-    id: srcKey,
-    valid: dstKey,
-    name: o.tittel.sn.toLowerCase()
-  });
 
   o.tittel.url = capitalizeFirstLetter(record[o.nivå]);
 
