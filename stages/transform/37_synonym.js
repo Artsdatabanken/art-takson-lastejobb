@@ -1,6 +1,6 @@
 const { io, log } = require("lastejobb");
 
-const taxons = io.lesDatafil("map2");
+const taxons = io.lesDatafil("35_map2");
 
 const r = {};
 const redirect = [];

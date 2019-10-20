@@ -1,6 +1,6 @@
 const { io, url } = require("lastejobb");
 
-let tre = io.lesDatafil("map3");
+let tre = io.lesDatafil("37_synonym");
 const toplevel = io.lesDatafil("art-takson-ubehandlet/type");
 toplevel.forEach(node => {
   const kode = node.kode;
@@ -9,4 +9,4 @@ toplevel.forEach(node => {
   tre[kode] = node;
 });
 new url(tre).assignUrls();
-io.skrivBuildfil(__filename, tre);
+io.skrivBuildfil("type", tre);
