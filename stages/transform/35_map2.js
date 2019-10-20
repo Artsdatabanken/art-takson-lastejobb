@@ -1,4 +1,4 @@
-const { io, log } = require("lastejobb");
+const { io } = require("lastejobb");
 
 const prefix = "AR";
 
@@ -6,28 +6,6 @@ const taxons = io.lesDatafil("30_map").items;
 
 let taxon2Data = {};
 taxons.forEach(tx => (taxon2Data[tx.id] = tx));
-//tvingOverordnetTilÅFinnesINorge();
-
-function tvingOverordnetTilÅFinnesINorge() {
-  Object.keys(taxon2Data).forEach(id => {
-    let node = taxon2Data[id];
-    // Underarter flagges med finnes i Norge, mens "forelder" ikke finnes i Norge.
-    if (!node.finnesINorge) return;
-    while (true) {
-      //      debugger;
-      if (node.id === "48103") debugger;
-      node = forelder(node.parentId);
-      if (!node) break;
-      if (!node.finnesINorge && node.nivå === "Art") {
-        // https://github.com/Artsdatabanken/Artsnavnebase/issues/3
-        log.warn(
-          "Finnes ikke i Norge, men har barn som finnes i Norge: " + node.id
-        );
-        node.finnesINorge = true;
-      }
-    }
-  });
-}
 
 let child2parent = {};
 taxons.forEach(taxon => {
@@ -54,7 +32,6 @@ let koder = {};
 const synonym = {};
 
 taxons.forEach(c => {
-  //  if (!c.finnesINorge) return;
   switch (c.status) {
     case "Uavklart":
       return;
