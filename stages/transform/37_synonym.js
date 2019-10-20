@@ -1,26 +1,24 @@
 const { io, log } = require("lastejobb");
 
 const taxons = io.lesDatafil("35_map2");
+const synonyms = io.lesDatafil("35_synonym");
 
-const r = {};
 const redirect = [];
 const stats = {};
-Object.keys(taxons).forEach(kode => {
-  let taxon = taxons[kode];
-  stats[taxon.status || "gyldig"] = (stats[taxon.status || "gyldig"] || 0) + 1;
-  if (!taxon.status) {
-    r[kode] = taxon; // Gyldig
-    return;
-  }
-
-  const gyldig = taxons[taxon.kodeGyldig];
+Object.keys(synonyms).forEach(kode => {
+  let synonym = synonyms[kode];
+  const gyldig = taxons[synonym.kodeGyldig];
   if (!gyldig)
     return log.warn(
-      `Finner ikke gyldig taxon ${taxon.kodeGyldig} fra ${kode} (${taxon.tittel.sn})`
+      `Finner ikke gyldig taxon ${synonym.kodeGyldig} fra ${kode} (${synonym.tittel.sn})`
     );
 
-  fyllPåSynonymer(taxon.tittel, gyldig);
-  redirect.push({ fra: kode, synonym: taxon.tittel.sn, til: taxon.kodeGyldig });
+  fyllPåSynonymer(synonym.tittel, gyldig);
+  redirect.push({
+    fra: kode,
+    synonym: synonym.tittel.sn,
+    til: synonym.kodeGyldig
+  });
 });
 
 function fyllPåSynonymer(tittel, gyldig) {
@@ -34,7 +32,7 @@ function fyllPåSynonymer(tittel, gyldig) {
   });
 }
 
-io.skrivDatafil(__filename, r);
+io.skrivDatafil(__filename, taxons);
 io.skrivBuildfil("redirect", redirect);
 
 log.info("Statistikk:");
