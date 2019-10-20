@@ -22,7 +22,7 @@ Object.keys(synonyms).forEach(kode => {
 });
 
 function fyllPåSynonymer(tittel, gyldig) {
-  gyldig.synonym = {};
+  if (!gyldig.synonym) gyldig.synonym = {};
   Object.keys(tittel).forEach(lang => {
     if (lang == "url") return; // we don't url for the synonym?
     const navn = tittel[lang];
