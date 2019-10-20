@@ -8,18 +8,12 @@ const hierarki = io
 
 const taxon = io.lesDatafil("20_taxon_to_json");
 
-let taxonId2SciNameId = [];
 const r = [];
 taxon.items.forEach(e => transform(e));
 io.skrivDatafil("alleår", alleår);
-io.skrivBuildfil("taxonId2SciNameId", taxonId2SciNameId);
 io.skrivDatafil(__filename, r);
 
 function transform(record) {
-  taxonId2SciNameId.push({
-    taxonId: record.PK_TaksonID,
-    sciNameId: record.FK_GyldigLatinskNavnID
-  });
   const o = {
     id: record.PK_LatinskNavnID,
     parentId: record.FK_OverordnaLatinskNavnID,
