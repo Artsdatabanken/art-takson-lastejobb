@@ -1,6 +1,6 @@
 var { csv, io } = require("lastejobb");
 
-const kildefil = "data/inn_ar_taxon.csv";
+const kildefil = "temp/inn_ar_taxon.csv";
 const options = {
   delimiter: ";",
   relax_column_count: true,

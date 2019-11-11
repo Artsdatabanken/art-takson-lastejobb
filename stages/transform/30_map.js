@@ -3,7 +3,7 @@ const { io } = require("lastejobb");
 const alleår = {};
 
 const hierarki = io
-  .readJson("data/art-takson-ubehandlet/hierarki.json")
+  .readJson("temp/art-takson-ubehandlet/hierarki.json")
   .items.reverse();
 
 const taxon = io.lesDatafil("20_taxon_to_json");
