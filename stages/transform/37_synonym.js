@@ -1,7 +1,7 @@
 const { io, log } = require("lastejobb");
 
-const taxons = io.lesDatafil("35_map2");
-const synonyms = io.lesDatafil("35_synonym");
+const taxons = io.lesTempJson("35_map2");
+const synonyms = io.lesTempJson("35_synonym");
 
 const redirect = [];
 const stats = {};
@@ -29,10 +29,12 @@ function fyllPåSynonymer(tittel, gyldig) {
     if (gyldig.tittel[lang] === navn) return;
     gyldig.synonym[lang] = gyldig.synonym[lang] || [];
     gyldig.synonym[lang].push(navn);
+    gyldig.synonym[lang] = gyldig.synonym[lang].sort()
   });
 }
 
 io.skrivDatafil(__filename, taxons);
+redirect.sort((a, b) => a.fra < b.fra ? 1 : -1)
 io.skrivBuildfil("redirect", redirect);
 
 log.info("Statistikk:");

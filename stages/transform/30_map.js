@@ -6,10 +6,10 @@ const hierarki = io
   .readJson("temp/art-takson-ubehandlet/hierarki.json")
   .items.reverse();
 
-const taxon = io.lesDatafil("20_taxon_to_json");
+const taxon = io.lesTempJson("20_taxon_to_json");
 
 const r = [];
-taxon.items.forEach(e => transform(e));
+taxon.forEach(e => transform(e));
 io.skrivDatafil("alleår", alleår);
 io.skrivDatafil(__filename, r);
 

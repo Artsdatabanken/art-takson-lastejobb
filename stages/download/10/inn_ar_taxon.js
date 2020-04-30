@@ -1,4 +1,4 @@
-const { http, log } = require("lastejobb")
+const { http, log } = require("lastejobb");
 // Laster ned arter fra Artsdatabanken sitt API
 http
   .downloadBinary(
@@ -6,5 +6,5 @@ http
     "inn_ar_taxon.csv"
   )
   .catch(err => {
-    log.fatal(err)
-  })
+    log.fatal(err);
+  });

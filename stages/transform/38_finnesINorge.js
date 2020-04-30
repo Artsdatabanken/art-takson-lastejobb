@@ -1,6 +1,6 @@
 const { io } = require("lastejobb");
 
-const taxons = io.lesDatafil("37_synonym");
+const taxons = io.lesTempJson("37_synonym");
 const parent2Child = {};
 const child2Parent = {};
 const stats = {};

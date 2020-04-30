@@ -1,7 +1,7 @@
 const { io, log } = require("lastejobb");
 
-const inn = io.lesDatafil("art-takson-ubehandlet/karakteristisk_art");
-const takson = io.lesBuildfil("type").items;
+const inn = io.lesTempJson("art-takson-ubehandlet/karakteristisk_art");
+const takson = io.readJson("build/type.json").items;
 
 const kode2Takson = takson.reduce((acc, e) => {
   acc[e.kode] = e;

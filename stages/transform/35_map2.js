@@ -2,7 +2,7 @@ const { io } = require("lastejobb");
 
 const prefix = "AR";
 
-const taxons = io.lesDatafil("30_map").items;
+const taxons = io.lesTempJson("30_map");
 
 let taxon2Data = {};
 taxons.forEach(tx => (taxon2Data[tx.id] = tx));
