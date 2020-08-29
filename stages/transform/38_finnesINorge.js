@@ -26,7 +26,9 @@ io.skrivDatafil("finnes_likevel_i_Norge_stats", stats);
 // I en del tilfeller er finnesINorge bare satt på et høyere nivå, men da betyr det at
 // også lavere nivå finnes i Norge
 // https://github.com/Artsdatabanken/Artsnavnebase/issues/3
-function underElementerFinnesOgsåINorge(kode) {
+function underElementerFinnesOgsåINorge(kode, visited = {}) {
+  if (visited[kode]) return
+  visited[kode] = true
   const taxon = taxons[kode];
 
   if (!taxon.finnesINorge) {
@@ -34,15 +36,17 @@ function underElementerFinnesOgsåINorge(kode) {
     taxon.finnesINorge = true;
   }
   const children = parent2Child[kode] || [];
-  children.forEach(kode => underElementerFinnesOgsåINorge(kode));
+  children.forEach(kode => underElementerFinnesOgsåINorge(kode, visited));
 }
 
-function overElementerFinnesOgsåINorge(kode) {
+function overElementerFinnesOgsåINorge(kode, visited = {}) {
+  if (visited[kode]) return
+  visited[kode] = true
   if (kode === "AR") return;
   const taxon = taxons[kode];
   const parents = child2Parent[kode] || [];
   if (!taxon.finnesINorge) {
     taxon.finnesINorge = true;
   }
-  parents.forEach(kode => overElementerFinnesOgsåINorge(kode));
+  parents.forEach(kode => overElementerFinnesOgsåINorge(kode, visited));
 }

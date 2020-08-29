@@ -8,5 +8,13 @@ toplevel.forEach(node => {
   delete node.kode;
   tre[kode] = node;
 });
+
+Object.keys(tre).forEach(kode => {
+  const node = tre[kode]
+  if (node.foreldre[0] === "AR-50747") delete tre[kode]
+
+})
+
+
 new url(tre).assignUrls();
 io.skrivBuildfil("type", tre);
