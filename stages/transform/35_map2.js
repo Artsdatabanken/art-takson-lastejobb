@@ -1,4 +1,4 @@
-const { io } = require("lastejobb");
+const { io, log } = require("lastejobb");
 
 const prefix = "AR";
 
@@ -52,7 +52,7 @@ taxons.forEach(c => {
     foreldre: [tilKode(parent && parent.id)]
   };
 
-  if (koder[kode]) debugger;
+  if (koder[kode]) return log.warn('Duplikat: ' + kode + " " + e.tittel);
   koder[kode] = e;
 });
 
