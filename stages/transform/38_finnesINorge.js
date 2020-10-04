@@ -1,4 +1,4 @@
-const { io } = require("lastejobb");
+const { io, log } = require("lastejobb");
 
 const taxons = io.lesTempJson("37_synonym");
 const parent2Child = {};
@@ -44,6 +44,8 @@ function overElementerFinnesOgsåINorge(kode, visited = {}) {
   visited[kode] = true
   if (kode === "AR") return;
   const taxon = taxons[kode];
+  if (!taxon)
+    return log.warn(`${kode} finnes ikke!?`)
   const parents = child2Parent[kode] || [];
   if (!taxon.finnesINorge) {
     taxon.finnesINorge = true;
